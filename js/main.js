@@ -23,25 +23,21 @@ function jumpTo(id) {
 }
 
 function init() {
-	function getURL(url) {
-		var request = new XMLHttpRequest();
-		request.open('GET', url, false);
-		request.send();
-		if (request.status === 200) {
-			return request.responseText;
-		}
-	}
 
-	getURL('img/menu/CONTENTS').split('\n').forEach(function (line) {
-		if (line.length > 0) {
-			$('#menu .pics').append('<img class="pic framed" src="img/menu/' + line + '"/>\n');
-		}
+	$.get('img/menu/CONTENTS').success(function(content) {
+		content.split('\n').forEach(function (line) {
+			if (line.length > 0) {
+				$('#menu .pics').append('<img class="pic framed" src="img/menu/' + line + '"/>\n');
+			}
+		});
 	});
 
-	getURL('img/pics/CONTENTS').split('\n').forEach(function (line) {
-		if (line.length > 0) {
-			$('#fotos .pics').append('<img class="pic framed" src="img/pics/' + line + '"/>\n');
-		}
+	$.get('img/pics/CONTENTS').success(function (content) {
+		content.split('\n').forEach(function (line) {
+			if (line.length > 0) {
+				$('#fotos .pics').append('<img class="pic framed" src="img/pics/' + line + '"/>\n');
+			}
+		});
 	});
 
 	$(window).scroll(updateActiveSection);
